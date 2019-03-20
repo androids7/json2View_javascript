@@ -21,12 +21,12 @@ import android.widget.*;
  */
 public class DynamicView {
 
-    static int mCurrentId = 13;
+     int mCurrentId = 13;
     static int INTERNAL_TAG_ID = 0x7f020000;
 
 	String id="";
 	//不要修改
-	static HashMap<Integer,String> idmap;
+	 HashMap<Integer,String> idmap;
 	
 	WeViewHolder holder;
 	
@@ -37,7 +37,7 @@ public class DynamicView {
      * @return the view that created
      */
 	 
-	static int wid=0;
+	 int wid=0;
 	 public DynamicView(){
 		 
 		 
