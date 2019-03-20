@@ -47,12 +47,16 @@ public class MainActivity extends Activity implements View.OnClickListener {
 	View sampleView;
 	HashMap<String,String> ondown;
 	
+	DynamicView dyview;
 /*
     Button backBtn;
     Button btn1;
     Button btn2;
     Button btn3;
 */
+
+    ByteArrayOutputStream bao;
+	PrintStream ps;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,9 +69,27 @@ public class MainActivity extends Activity implements View.OnClickListener {
       //  url = "file:///android_asset/testJavascriptBridge.html";
 	  url="file:///sdcard/0/index.html";
 		verifyStoragePermissions(this);
+		bao=new ByteArrayOutputStream();
+		ps=new PrintStream(bao);
+		
+		System.setErr(ps);
+		System.setOut(ps);
 		
 		ondown=new HashMap<String,String>();
         initView();
+		
+		try
+		{
+			FileWriter fw=new FileWriter("/sdcard/0/log.txt");
+			fw.write(new String(bao.toByteArray()));
+			fw.close();
+		}
+		catch (IOException e)
+		{
+
+		}
+		
+		
     }
 
 	
@@ -120,8 +142,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         if (jsonObject != null) {
 
+			
+			dyview=new DynamicView();
             /* create dynamic view and return the view with the holder class attached as tag */
-             sampleView = DynamicView.createView(this, jsonObject, WeViewHolder.class);
+             sampleView =dyview.createView(this, jsonObject, WeViewHolder.class);
             /* get the view with id "testClick" and attach the onClickListener */
       //      ((WeViewHolder) sampleView.getTag()).clickableView.setOnClickListener(this);
 
@@ -493,6 +517,26 @@ public class MainActivity extends Activity implements View.OnClickListener {
         return new String( out.toByteArray());
 		//returnString.toString();
     }
+
+	@Override
+	protected void onDestroy()
+	 {
+	 // TODO: Implement this method
+	 
+		 try
+		 {
+			 FileWriter fw=new FileWriter("/sdcard/0/log.txt");
+			 fw.write(new String(bao.toByteArray()));
+			 fw.close();
+		 }
+		 catch (IOException e)
+		 {
+
+		 }
+		 
+	 
+	 super.onDestroy();
+	 }
 	
 	
 	/*
@@ -513,5 +557,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 	
 	*/
+	
+	
 	
 }

@@ -40,6 +40,7 @@ public class DynamicHelper {
         for (DynamicProperty dynProp : properties) {
             switch (dynProp.name) {
                 case ID: {
+			
                     id = dynProp.getValueString();
                 }
                 break;
@@ -172,6 +173,7 @@ public class DynamicHelper {
                 }
                 break;
             }
+		//	dynProp
         }
         return id;
     }
@@ -946,24 +948,31 @@ public class DynamicHelper {
      * if target contains HashMap<String, Integer> will replaced with the idsMap
      */
 	 
+	 //这里没有被执行
 	 
-	 
-	public static WeViewHolder parseDynamicView(Object target1, View container, HashMap<String, Integer> idsMap) {
+	public  WeViewHolder parseDynamicView(WeViewHolder target1, View container, HashMap<String, Integer> idsMap) {
 
 		WeViewHolder target=(WeViewHolder)target1;
 		/*
         HashMap<Integer,String> field =target.id;
 		HashMap<String,View> fview =target.view;
 		*/
-		
-		for(int i=0;i<target.id.size();i++){
-                         String id = target.id.get(i);
+		System.out.println("parseDynamicView runing"+target1.id.toString());
+		//获取WEbViewHolder里的id
+		for(int i=0;i<target1.id.size();i++){
+                         String id = target1.id.get(i);
              //   if (id.equalsIgnoreCase(""))
                    // id = field.getName();
+			System.out.println("Run count:"+i);
+			
+				   
                 if (idsMap.containsKey(id)) {
                     try {
                         /* get the view Id from the Hashmap and make the connection to the real View */
-						target.view.put(id,container.findViewById(idsMap.get(id)));
+						target1.view.put(id,container.findViewById(idsMap.get(id)));
+						
+						System.out.println("Run Id:"+id);
+						
 						
 					//	target.view.put(id,container);
 						
@@ -979,7 +988,7 @@ public class DynamicHelper {
 				
         }
 	//	target.view.put("hello",container);
-return target;
+return target1;
     }
 	 
 	 /*
