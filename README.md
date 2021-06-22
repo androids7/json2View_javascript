@@ -1,0 +1,3 @@
+# json2View_javascript
+json作为界面，javascript作为开发语言
+实现从网络动态加载布局界面
